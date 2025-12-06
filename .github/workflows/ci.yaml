@@ -1,0 +1,44 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - main
+
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    ci:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: 3.14
+
+            - name: Install uv
+              run: python -m pip install uv
+
+            - name: Cache the virtualenv
+              uses: actions/cache@v4
+              with:
+                  path: ./.venv
+                  key: ${{ runner.os }}-venv-${{ hashFiles('**/uv.lock') }}
+
+            - name: Install Python dependencies
+              run: uv venv --allow-existing && uv sync
+
+            - name: Update GITHUB_PATH
+              run: echo "$(uv python find)" >> $GITHUB_PATH
+
+            - name: Run pre-commit hooks
+              uses: pre-commit/action@v3.0.1
+
+            - name: Run all tests
+              run: uv run pytest

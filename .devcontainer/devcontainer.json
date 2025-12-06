@@ -1,0 +1,41 @@
+{
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "charliermarsh.ruff",
+        "tamasfe.even-better-toml",
+        "-ms-python.autopep8"
+      ],
+      "settings": {
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff"
+        },
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file",
+        "files.exclude": {
+          ".venv": true,
+          "**/.pytest_cache": true,
+          "**/.ruff_cache": true,
+          "**/__pycache__": true
+        },
+        "files.insertFinalNewline": true,
+        "python.analysis.typeCheckingMode": "basic",
+        "python.testing.pytestArgs": [
+          "."
+        ],
+        "python.testing.pytestEnabled": true,
+        "python.testing.unittestEnabled": false
+      }
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "toolsToInstall": ["uv"],
+      "version": "3.14"
+    }
+  },
+  "image": "mcr.microsoft.com/vscode/devcontainers/base:debian",
+  "name": "Advent of Code 2025 \ud83c\udf84",
+  "onCreateCommand": "bash .devcontainer/oncreate.sh",
+  "postCreateCommand": "bash .devcontainer/postcreate.sh"
+}
