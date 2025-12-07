@@ -29,10 +29,10 @@ def is_invalid(id_: int) -> bool:
     as_str = str(id_)
 
     first_half = as_str[: len(as_str) // 2]
-    chunks = list(accumulate(first_half))
+    chunks = [chunk for chunk in accumulate(first_half) if len(as_str) % len(chunk) == 0]
 
     # Check the largest chunks first for efficiency
-    return any(all(a == "".join(b) for b in batched(as_str, len(a), strict=False)) for a in reversed(chunks))
+    return any(all(a == "".join(b) for b in batched(as_str[len(a) :], len(a), strict=True)) for a in reversed(chunks))
 
 
 def solve(data: str) -> int:
