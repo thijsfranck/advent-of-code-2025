@@ -24,13 +24,18 @@ class Movement:
 
     def apply(self, start: int, positions: int) -> int:
         """Apply the movement to a starting position and return the new position."""
-        if self.direction == "R":
-            return (start + self.distance) % positions
+        return (start + self.difference) % positions
 
-        if self.direction == "L":
-            return (start - self.distance) % positions
-
-        raise UnknownDirectionError(self.direction)
+    @property
+    def difference(self) -> int:
+        """Return the signed distance of the movement."""
+        match self.direction:
+            case "R":
+                return self.distance
+            case "L":
+                return -self.distance
+            case _:
+                raise UnknownDirectionError(self.direction)
 
 
 def solve(lines: list[str], starting_position: int, positions: int) -> int:

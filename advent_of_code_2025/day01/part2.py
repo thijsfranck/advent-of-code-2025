@@ -28,22 +28,28 @@ class Movement:
 
         Return the number of times position zero is crossed and the new position.
         """
-        if self.direction == "R":
-            zero_passes, end = divmod(start + self.distance, positions)
+        zero_passes, end = divmod(start + self.difference, positions)
+        zero_passes = abs(zero_passes)  # Amount is negative if moving left
 
-        elif self.direction == "L":
-            zero_passes, end = divmod(start - self.distance, positions)
-
+        if self.direction == "L":
             if start == 0:
-                zero_passes += 1
+                zero_passes -= 1  # Starting at zero and moving left doesn't count as crossing
 
             if end == 0:
-                zero_passes -= 1
+                zero_passes += 1  # Landed exactly on zero
 
-        else:
-            raise UnknownDirectionError(self.direction)
+        return zero_passes, end
 
-        return abs(zero_passes), end
+    @property
+    def difference(self) -> int:
+        """Return the signed distance of the movement."""
+        match self.direction:
+            case "R":
+                return self.distance
+            case "L":
+                return -self.distance
+            case _:
+                raise UnknownDirectionError(self.direction)
 
 
 def solve(lines: list[str], starting_position: int, positions: int) -> int:
