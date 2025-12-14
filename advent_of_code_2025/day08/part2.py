@@ -51,8 +51,8 @@ def find_cirquits(graph: dict[int, dict[int, float]]) -> Generator[set[int]]:
     visited = set()
 
     for node in graph:
-        if node not in visited and len(cirquit := find_cirquit(graph, node, visited, {node})) > 1:
-            yield cirquit
+        if node not in visited:
+            yield find_cirquit(graph, node, visited, {node})
 
 
 def solve(data: list[tuple[int, ...]]) -> int:
