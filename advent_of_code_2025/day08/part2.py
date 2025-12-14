@@ -65,11 +65,11 @@ def solve(data: list[tuple[int, ...]]) -> int:
     while edge := heapq.heappop(edgelist):
         distance, (source, target) = edge
 
-        graph[source][target] = distance
-        graph[target][source] = distance
-
         if source in cirquit and target in cirquit:  # The cirquit does not expand
             continue
+
+        graph[source][target] = distance
+        graph[target][source] = distance
 
         if len(cirquit := next(find_cirquits(graph), set())) != len(data):  # The first cirquit is not complete yet
             continue
