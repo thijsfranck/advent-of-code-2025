@@ -50,7 +50,8 @@ def find_cirquit(graph: dict[int, dict[int, float]], node: int, visited: set[int
 
     for neighbor, weight in graph[node].items():
         if weight > 0 and neighbor not in visited:
-            cirquit = find_cirquit(graph, neighbor, visited, {*cirquit, neighbor})
+            cirquit.add(neighbor)
+            cirquit = find_cirquit(graph, neighbor, visited, cirquit)
 
     return cirquit
 

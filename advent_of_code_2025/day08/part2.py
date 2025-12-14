@@ -41,7 +41,8 @@ def find_cirquit(graph: dict[int, dict[int, float]], node: int, visited: set[int
 
     for neighbor, weight in graph[node].items():
         if weight > 0 and neighbor not in visited:
-            cirquit = find_cirquit(graph, neighbor, visited, {*cirquit, neighbor})
+            cirquit.add(neighbor)
+            cirquit = find_cirquit(graph, neighbor, visited, cirquit)
 
     return cirquit
 
@@ -71,7 +72,9 @@ def solve(data: list[tuple[int, ...]]) -> int:
         graph[source][target] = distance
         graph[target][source] = distance
 
-        if len(cirquit := next(find_cirquits(graph), set())) != len(data):  # The first cirquit is not complete yet
+        cirquit = next(find_cirquits(graph), set())
+
+        if len(cirquit) != len(data):  # The first cirquit is not complete yet
             continue
 
         source_x, *_ = data[source]
