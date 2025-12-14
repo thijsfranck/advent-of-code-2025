@@ -20,8 +20,8 @@ def find_start(matrix: list[list[str]]) -> tuple[int, int]:
 
 def simulate(matrix: list[list[str]], start: tuple[int, int]) -> int:
     """Return the number of positions at which the tachyon beam splits in the matrix."""
-    x_bounds = range(len(matrix))
-    y_bounds = range(len(matrix[0]))
+    y_bounds = range(len(matrix))
+    x_bounds = range(len(matrix[0]))
 
     visited = set()
 

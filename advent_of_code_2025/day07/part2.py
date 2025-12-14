@@ -22,8 +22,8 @@ def find_start(matrix: list[list[str]]) -> tuple[int, int]:
 
 def simulate(matrix: list[list[str]], start: tuple[int, int]) -> int:
     """Return the total number of timelines created by the tachyon beam in the matrix."""
-    x_bounds = range(len(matrix))
-    y_bounds = range(len(matrix[0]))
+    y_bounds = range(len(matrix))
+    x_bounds = range(len(matrix[0]))
 
     @cache
     def _simulate(pos: tuple[int, int]) -> int:
